@@ -1,0 +1,87 @@
+PENJELASAN DI DAFTAR FUNGSI BAG 2
+
+NO -- 2.1
+
+Ini adalah fungsi T-SQL yang tampaknya bertanggung jawab untuk mendaftarkan anggota baru untuk suatu organisasi. Fungsi mengambil beberapa parameter sebagai masukan, antara lain nomor induk anggota (No_KTP), nama (Nama), jenis kelamin (Jenis_Kelamin), alamat (Alamat), desa (Kelurahan), kecamatan (Kecamatan), kota (Kabupaten_Kota), provinsi ( Propinsi), nomor kontak (No_Kontak), dan jumlah minimum transaksi (MinTrans).
+
+Fungsi kemudian melakukan beberapa operasi:
+
+Itu mendeklarasikan beberapa variabel termasuk @res (untuk menyimpan hasil akhir), @member_id (untuk menyimpan ID anggota), @no_daftar (untuk menyimpan nomor pendaftaran), @tahun, @bulan, dan @hari (untuk menyimpan tahun berjalan , bulan, dan hari masing-masing), @tanggal_daftar_member (untuk menyimpan tanggal pendaftaran), @tanggal_kedaluarsa_member (untuk menyimpan tanggal kedaluwarsa), dan @Jenis_MemberJenis_Member_ID (untuk menyimpan ID jenis anggota).
+
+Jika jumlah transaksi minimum (@MinTrans) sama dengan 100000, nomor pendaftaran 0001, tahun, bulan, dan hari saat ini akan ditetapkan ke variabel @tahun, @bulan, dan @hari. Ini kemudian menggabungkan nilai-nilai ini untuk membuat ID anggota dan menyimpannya di variabel @member_id.
+
+Itu menetapkan variabel @tanggal_daftar_member ke tanggal dan waktu saat ini menggunakan fungsi SYSDATETIME().
+
+Ini menetapkan variabel @tanggal_kedaluarsa_member ke satu tahun dari tanggal dan waktu saat ini menggunakan fungsi DATEADD().
+
+Menggunakan pernyataan kasus untuk mengatur variabel @Jenis_MemberJenis_Member_ID berdasarkan nilai @MinTrans. Jika @MinTrans adalah 50000, ID tipe anggota disetel ke 1. Jika @MinTrans adalah 100000, ID tipe anggota disetel ke 2. Jika @MinTrans adalah 1000000, ID tipe anggota disetel ke 3. Jika tidak, tipe anggota ID diatur ke 0.
+
+Itu menetapkan variabel @res ke string yang menyertakan ID tipe anggota dan tanggal kedaluwarsa.
+
+Jika @MinTrans tidak sama dengan 100000, ini menetapkan variabel @res menjadi string yang menunjukkan bahwa proses pendaftaran telah ditolak.
+
+Fungsi kemudian mengembalikan nilai variabel @res.
+
+Terakhir, pernyataan SELECT di akhir skrip memanggil fungsi dan meneruskan nilai sampel untuk parameter masukan. Hasil dari fungsi akan dikembalikan dan ditampilkan.
+
+NO -- 2.2 
+
+Skrip ini membuat fungsi skalar bernama MembawaNamaPegawai di database. Fungsi menerima parameter input tunggal @Pegawai_ID dari tipe VARCHAR(255), dan mengembalikan nilai VARCHAR(255).
+
+Fungsi pertama mendeklarasikan variabel @res bertipe VARCHAR(255). Kemudian memeriksa apakah nilai @Pegawai_ID yang diberikan ada di tabel Pegawai, dengan membandingkannya dengan nilai Pegawai_ID di tabel. Jika ditemukan kecocokan, fungsi menetapkan @res ke nilai Nama yang sesuai dari tabel Pegawai, dan mengembalikan @res sebagai keluaran fungsi. Jika tidak ditemukan kecocokan, fungsi menetapkan @res ke string kosong dan mengembalikannya.
+
+Pernyataan SELECT terakhir di akhir skrip memanggil fungsi, meneruskan nilai '2' sebagai parameter input, dan menampilkan output dari fungsi.
+
+NO -- 2.3
+
+Skrip ini membuat fungsi yang disebut SetBawahan dalam database. Fungsi mengambil dua parameter: @Pegawai_ID dan @Atasan_ID, yang keduanya bertipe VARCHAR(255). Fungsi mengembalikan nilai VARCHAR(255).
+
+Fungsi pertama mendeklarasikan variabel lokal bernama @res yang juga bertipe VARCHAR(255). Ia kemudian memeriksa apakah fungsi MengambilNamaPegawai yang diterapkan ke @Pegawai_ID dan @Atasan_ID mengembalikan string kosong. Jika kondisi ini benar, nilai @res ditetapkan ke pesan yang menunjukkan bahwa karyawan yang ditentukan tidak tersedia. Jika kondisi salah, maka nilai @res diset menjadi string yang menggabungkan 'Selamat', hasil MembawaNamaPegawai diterapkan ke @Pegawai_ID, 'menjadi bawahan dari', dan hasil MembawaNamaPegawai diterapkan ke @Atasan_ID.
+
+Terakhir, fungsi mengembalikan nilai @res.
+
+Skrip kemudian memanggil fungsi SetBawahan dan memberikannya argumen '6' dan '1'. Hasil pemanggilan fungsi ini kemudian dipilih.
+
+NO -- 2.4
+
+Ini adalah fungsi T-SQL yang menghitung jumlah diskon untuk produk dengan ID dan kuantitas tertentu. Fungsi pertama mendeklarasikan dan menginisialisasi variabel lokal @harga, @diskon, dan @res untuk menyimpan harga satuan produk, persentase diskon untuk produk, dan hasil akhir masing-masing.
+
+Harga satuan diperoleh dengan melakukan query pada kolom Harga_Satuan pada tabel Produk menggunakan parameter @Produk_ID. Persentase diskon diperoleh dengan menggabungkan tabel Produk, Diskon_Produk, dan Diskon dan memilih kolom Persen_Diskon, difilter dengan tanggal saat ini berada dalam rentang Tanggal_Awal_Berlaku dan Tanggal_Akhir_Berlaku dan parameter @Kuantitas lebih besar atau sama dengan nilai MinQty.
+
+Jika harga satuan atau persentase diskon adalah NULL, hasil akhir ditetapkan ke 0. Jika tidak, hasil akhir dihitung sebagai hasil kali persentase diskon dan harga satuan, dibagi 100. Terakhir, fungsi mengembalikan hasil akhir hasil.
+
+no -- 3.1
+
+Ini adalah prosedur tersimpan di T-SQL (Transact-SQL), bahasa yang digunakan untuk mengelola dan memanipulasi data di database Microsoft SQL Server.
+
+Prosedur tersimpan disebut TambahPenjualan (yang berarti "tambah penjualan" dalam bahasa Indonesia) dan menerima tiga parameter sebagai input: @Pegawai_ID, @Member_ID, dan @Total_Pembayaran.
+
+Prosedur tersimpan dimulai dengan mendeklarasikan tiga variabel: @pegawai, @no_transaksi, dan @nomor. @pegawai diberi nilai @Pegawai_ID, @no_transaksi adalah string yang dibangun menggunakan tanggal saat ini dan nilai @nomor diformat dengan cara tertentu, dan @nomor diinisialisasi ke hitungan baris di tabel Penjualan. Jika waktu saat ini adalah tengah malam, @nomor bertambah 0000.
+
+Selanjutnya, prosedur tersimpan memulai blok TRY yang mencoba memasukkan baris baru ke dalam tabel Penjualan. Nilai kolom No_Transaksi, Tanggal_Transaksi, Total_Pembayaran, dan Jenis_Pembayaran diturunkan dari kolom @no_transaksi, tanggal sekarang, @Total_Pembayaran, dan string 'CASH'. Nilai kolom PegawaiPegawai_ID dan MemberMember_ID diambil dari parameter @pegawai dan @Member_ID.
+
+Jika terjadi kesalahan selama pernyataan INSERT, kontrol dipindahkan ke blok CATCH yang memeriksa nomor kesalahan. Jika nomor error 515, akan muncul pesan yang menandakan bahwa data untuk Pegawai (pegawai) tidak dikenali.
+
+Terakhir, stored procedure dijalankan dengan nilai spesifik untuk parameter input dan baris yang dihasilkan dalam tabel Penjualan dipilih dan dikembalikan.
+
+no -- 3.2
+
+Skrip ini membuat stored procedure di T-SQL bernama TambahRincianPenjualan. stored procedure ini menerima tiga parameter masukan: @No_Transaksi, @Produk_ID, dan @Kuantitas.
+
+Prosedur tersimpan dimulai dengan mendeklarasikan beberapa variabel: @rincian_id, @no, @produk, @harga, dan @nomor.
+
+@rincian_id adalah string yang terdiri dari karakter 'INV-', tanggal sekarang dengan format 'yyyyMMdd', tanda hubung, dan angka empat digit yang dihasilkan berdasarkan jumlah baris pada tabel Rincian_Penjualan .
+
+@no dan @produk masing-masing ditetapkan ke nilai kolom No_Transaksi dan Produk_ID, di tabel Penjualan dan Produk. Nilai-nilai ini diambil menggunakan pernyataan SELECT dan blok TRY...CATCH.
+
+@harga diatur ke nilai kolom Harga_Satuan di tabel Produk.
+
+@nomor diatur sesuai jumlah baris pada tabel Rincian_Penjualan, ditambah 1. Jika waktu sekarang adalah '00:00:00', nilai @nomor bertambah 0000.
+
+Terakhir dimasukkan baris baru ke dalam tabel Rincian_Penjualan dengan nilai variabel @rincian_id, @harga, @Kuantitas, @no, @produk, dan hasil pemanggilan fungsi dbo.NominalDiskon dengan input parameter @Produk_ID dan @ Jumlah.
+
+Script kemudian mengeksekusi stored procedure dengan memasukkan nilai 'INV-20221226-0011', '1', dan 5, kemudian mengambil semua baris dari tabel Rincian_Penjualan.
+
+no -- 4.1
+
+Kode ini membuat pemicu di database yang memperbarui kolom "Total_Pembayaran" di tabel "Penjualan" setiap kali baris baru dimasukkan ke dalam tabel "Rincian_Penjualan". Pemicu menghitung total biaya produk di baris baru tabel "Rincian_Penjualan" dan menambahkannya ke kolom "Total_Pembayaran" di tabel "Penjualan" untuk transaksi terkait. Pemicunya disebut "Total_Bayar", dan hanya diaktifkan setelah operasi INSERT dilakukan pada tabel "Rincian_Penjualan". Pernyataan SELECT di akhir kode tidak terkait dengan pemicu dan digunakan untuk mengambil semua baris dari tabel "Rincian_Penjualan".
